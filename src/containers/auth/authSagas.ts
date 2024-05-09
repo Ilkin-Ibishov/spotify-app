@@ -8,13 +8,13 @@ import { getUser, getUserFailed, getUserSuccess } from "./slice";
 function* getUserIdSaga() {
   try {
     const accessToken: string = yield select(authSelectors.getAccessToken);
-
+    localStorage.setItem("token",accessToken)
     const request = () =>
       axios.get<any>("https://api.spotify.com/v1/me", {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
     const { data } = yield call(request);
-
+    localStorage.setItem("userId",data.id)
     yield put(getUserSuccess({ userId: data.id, userName: data.display_name }));
   } catch (error: any) {
     yield put(getUserFailed({ message: error.message }));

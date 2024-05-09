@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useRef } from "react";
+import React, { FC, ReactElement } from "react";
 import { Button } from "@mui/material";
 import AddNewPlaylistModal from "./AddNewPlaylistModal";
 import TextField from '@mui/material/TextField';
@@ -9,7 +9,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 const AddNewPlaylist: FC = (): ReactElement => {
-    const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
