@@ -1,6 +1,6 @@
 import { FC, ReactElement, useEffect, useState } from "react";
-import { Box, Skeleton } from "@mui/material";
-import { getPlaylistTracks } from "../Request";
+import { Box, Skeleton, Button, Typography } from "@mui/material";
+import { getPlaylistTracks, removeTrackFromPlaylist } from "../Request";
 import { PlaylistsINT, PlaylistTrack, ItemINT } from "../types/playlist-type";
 
 interface TracksTableProps {
@@ -14,8 +14,18 @@ const TracksTable: FC<TracksTableProps> = ({ selectedPlaylistId, playlists }): R
             artistName: <Skeleton width={60} variant="text" sx={{ fontSize: '1rem' }} />,
             albumName: <Skeleton width={60} variant="text" sx={{ fontSize: '1rem' }} />,
             releaseDate: <Skeleton width={60} variant="text" sx={{ fontSize: '1rem' }} />,
-            id: ""
+            id: "",
+            uri: ""
     }]);
+    const handleDeleteTrack = async (uri) =>{
+      const removing = await removeTrackFromPlaylist(selectedPlaylistId, uri)
+      if(removing){
+        const removeFromPlaylistTracks =(track)=>{
+          return track.uri !== uri
+        }
+        setSelectedPlaylistTracks(prev=>prev.filter(removeFromPlaylistTracks))
+      }
+    }
     useEffect(() => {
         const fetchDataAndSetPlaylists = async () => {
           await setSelectedPlaylistTracks([])
@@ -29,11 +39,12 @@ const TracksTable: FC<TracksTableProps> = ({ selectedPlaylistId, playlists }): R
                         artistName: item.track.artists[0].name,
                         albumName: item.track.album.name,
                         releaseDate: item.track.album.release_date,
-                        id: item.track.id
+                        id: item.track.id,
+                        uri: item.track.uri
                     }
                 )))
             }
-            console.log(data);
+            console.log("data", data);
           } catch (error) {
             console.error('Error:', error);
           }
@@ -42,21 +53,24 @@ const TracksTable: FC<TracksTableProps> = ({ selectedPlaylistId, playlists }): R
         fetchDataAndSetPlaylists();
       }, [playlists, selectedPlaylistId]);
     console.log("selectedPlaylistTracks", selectedPlaylistTracks);
-    console.log("ggg");
+    
     return (
       <Box sx={{display: "flex", flexDirection: "column", gap: "30px"}}>
         {selectedPlaylistTracks && selectedPlaylistTracks.map((track)=>(
-            <Box key={track.id} sx={{width: "80%" ,display: "flex", flexDirection: "row", gap: "10%", alignItems: "center"}}>
+            <Box key={track.id} sx={{width: "85%" ,display: "flex", flexDirection: "row", gap: "10%", alignItems: "center"}}>
                 {typeof track.image === 'string'
                     ?<img src={track.image} alt="" width={'40px'} height={'50px'} />
                     :<Box>{track.image}</Box>
                 }
-                <div>
+                <Box sx={{width: "30%"}}>
                     <Box>{track.trackName}</Box>
                     <Box>{track.artistName}</Box>
-                </div>
-                <Box>{track.albumName}</Box>
-                <Box>{track.releaseDate}</Box>
+                </Box>
+                <Box sx={{width: "30%", overflow: "hidden", whiteSpace: "nowrap"}}>
+                <p className="ellipsis-text">{track.albumName}</p>
+                </Box>
+                <Box sx={{width: "20%"}}>{track.releaseDate}</Box>
+                <Button onClick={()=>handleDeleteTrack(track.uri)} sx={{textWrap: "nowrap", width: "200px"}} variant="contained">Remove track</Button>
             </Box>
         ))}
       </Box>

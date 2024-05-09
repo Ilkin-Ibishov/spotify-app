@@ -66,3 +66,48 @@ export const addTracksToPlaylist = async (playlistId, uri) => {
       throw error;
   }
 };
+
+export const removeTrackFromPlaylist = async (playlistId, uri) => {
+  try {
+    const response = await axios.delete(
+      `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        data: {
+          tracks: [{"uri":uri}],
+          snapshot_id: ''
+        }
+      }
+    );
+    return true;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+};
+
+export const createPlaylist = async (name, description) => {
+  try {
+    const response = await axios.post(
+      `https://api.spotify.com/v1/users/${userId}/playlists`,
+      {
+        name: name,
+        description: description,
+        public: false
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+};

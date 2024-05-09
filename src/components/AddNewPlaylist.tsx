@@ -1,16 +1,14 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, FunctionComponentElement, ReactElement } from "react";
 import { Button } from "@mui/material";
-import AddNewPlaylistModal from "./AddNewPlaylistModal";
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { createPlaylist } from "../Request";
 
-const AddNewPlaylist: FC = (): ReactElement => {
+const AddNewPlaylist: FC<any> = ({fetchDataAndSetPlaylists}): ReactElement => {
   const [open, setOpen] = React.useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -18,15 +16,16 @@ const AddNewPlaylist: FC = (): ReactElement => {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) =>{
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) =>{
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const formJson = Object.fromEntries((formData as any).entries());
-    const email = formJson.email;
-    console.log(email);
+    const creating = await createPlaylist(formJson.playlistName, formJson.playlistDescription)
+    console.log(creating.id);
+    localStorage.setItem("selectedPlaylistId",creating.id)
     handleClose();
+    fetchDataAndSetPlaylists()
   }
-
     return (
         <>
             <Button onClick={handleClickOpen} sx={{textWrap: "nowrap"}} variant="contained">Add new playlist</Button>
@@ -41,8 +40,8 @@ const AddNewPlaylist: FC = (): ReactElement => {
       >
         <DialogTitle variant="h4">Add new playlist</DialogTitle>
         <DialogContent sx={{display: "flex", gap: "30px", flexDirection: "column"}}>
-            <TextField sx={{width: "100%"}} id="outlined-basic" label="Playlist name" variant="outlined" />
-            <TextField multiline rows={4} sx={{width: "100%"}} id="outlined-basic" label="Playlist description" variant="outlined" />
+            <TextField sx={{width: "100%"}} name="playlistName" id="outlined-basic" label="Playlist name" variant="outlined" />
+            <TextField multiline rows={4} sx={{width: "100%"}} name="playlistDescription" id="outlined-basic" label="Playlist description" variant="outlined" />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

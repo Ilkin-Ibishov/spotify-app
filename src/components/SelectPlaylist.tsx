@@ -11,12 +11,13 @@ const SelectPlaylist: FC<PlaylistsList> = ({ playlists }) => {
   const [selectedPlaylist, setSelectedPlaylist] = useState<string>('');
   const [selectedPlaylistDescription, setSelectedPlaylistDescription] = useState<string>('');
   const [selectedPlaylistId, setSelectedPlaylistId] = useState<string>('');
+  console.log("change", selectedPlaylistId);
+  
   useEffect(() => {
-    if(localStorage.getItem("selectedPlaylistId")){
+    if(localStorage.getItem("selectedPlaylistId") !== selectedPlaylistId){
       return
     }
     else if (playlists && playlists.length > 0) {
-      console.log("else if");
       setSelectedPlaylist(playlists[0].name || '');
       setSelectedPlaylistDescription(playlists[0]?.description || '');
       setSelectedPlaylistId(playlists[0].id || '')
@@ -25,12 +26,13 @@ const SelectPlaylist: FC<PlaylistsList> = ({ playlists }) => {
   
   const handleChange = (event: SelectChangeEvent) => {
     const selectedValue = event.target.value as string;
-    console.log("selectedValue",selectedValue);
     setSelectedPlaylist(selectedValue);
     const selectedPlaylist = playlists.find(playlist => playlist.name === selectedValue);
     if (selectedPlaylist) {
       setSelectedPlaylistDescription(selectedPlaylist.description);
       setSelectedPlaylistId(selectedPlaylist.id)
+      console.log(selectedPlaylist);
+      
     }
   };
   localStorage.setItem("selectedPlaylistId",selectedPlaylistId)

@@ -8,26 +8,22 @@ import { ItemINT } from "./types/playlist-type";
 
 const App: FC = (): ReactElement => {
   const [playlists, setPlaylists] = useState<ItemINT[]>([]);
-
+  const fetchDataAndSetPlaylists = async () => {
+    try {
+      const data = await getPlaylists();
+      setPlaylists(data.items);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
   useEffect(() => {
-    const fetchDataAndSetPlaylists = async () => {
-      try {
-        const data = await getPlaylists();
-        setPlaylists(data.items);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-
     fetchDataAndSetPlaylists();
   }, []);
-
-  console.log("added");
   
   const memoizedSearchtrack = useMemo(() => <Searchtrack setPlaylists={setPlaylists} />, [setPlaylists]);
-  const memoizedAddNewPlaylist = useMemo(() => <AddNewPlaylist />, []);
+  const memoizedAddNewPlaylist = useMemo(() => <AddNewPlaylist fetchDataAndSetPlaylists={fetchDataAndSetPlaylists} />, []);
   const memoizedSelectPlaylist = useMemo(() => <SelectPlaylist playlists={playlists} />, [playlists]);
-
+  
   return (
     <Box sx={{ p: "5%", height: "100%", display: "flex", gap: "40px", flexDirection: "column" }}>
       <Box sx={{display: "flex", flexDirection: "row", justifyContent: "space-between", width: "100%", pb: "5%"}}>

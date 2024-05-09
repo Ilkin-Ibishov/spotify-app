@@ -125,7 +125,8 @@ export interface PlaylistTrack {
       artistName: any;
       albumName: any;
       releaseDate: any;
-      id: any;
+      id: string;
+      uri: string;
   }
 
 export interface SeacrhResult {
