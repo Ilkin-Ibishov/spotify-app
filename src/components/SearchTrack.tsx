@@ -44,7 +44,7 @@ const Searchtrack: FC<SearchtrackProps> = ({ setPlaylists }) => {
     return (<>
       <Box sx={{ width: "80%"}}>
       <Box sx={{ display: "flex", gap: "20px", width: "100%" }}>
-        <TextField onBlur={()=>setisBlur(true)} onFocus={()=>setisBlur(false)} id="outlined-basic" variant="outlined" sx={{ width: "40%"}} inputRef={inputText}
+        <TextField onBlur={()=>setisBlur(true)} onFocus={()=>setisBlur(false)} id="outlined-basic" variant="outlined" sx={{ width: "40%",  backgroundColor: "white", color: "black", borderRadius: "10px"}} inputRef={inputText}
             InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -52,7 +52,7 @@ const Searchtrack: FC<SearchtrackProps> = ({ setPlaylists }) => {
                   </InputAdornment>
                 ),
               }}/>
-        <Button onClick={handleSearch} variant="contained">Search</Button>
+        <Button onClick={handleSearch} sx={{ backgroundColor: "white", color: "black"}} variant="contained">Search</Button>
       </Box>
       {searchResults.length >0 && !isBlur?<Box sx={{position: "absolute", backgroundColor: "white", zIndex: 10, border: "solid 1px", borderColor: "black", overflowY: "scroll", height: "300px", width: "29%"}}>
       {searchResults.map((item:searchResultItems, index) => (

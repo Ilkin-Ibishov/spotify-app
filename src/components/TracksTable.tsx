@@ -55,11 +55,11 @@ const TracksTable: FC<TracksTableProps> = ({ selectedPlaylistId, playlists }): R
     console.log("selectedPlaylistTracks", selectedPlaylistTracks);
     
     return (
-      <Box sx={{display: "flex", flexDirection: "column", gap: "30px"}}>
+      <Box sx={{display: "flex", flexDirection: "column", gap: "15px"}}>
         {selectedPlaylistTracks && selectedPlaylistTracks.map((track)=>(
-            <Box key={track.id} sx={{width: "85%" ,display: "flex", flexDirection: "row", gap: "10%", alignItems: "center"}}>
+            <Box className="playlistTrack" key={track.id} sx={{width: "85%" ,display: "flex", flexDirection: "row", gap: "10%", alignItems: "center"}}>
                 {typeof track.image === 'string'
-                    ?<img src={track.image} alt="" width={'40px'} height={'50px'} />
+                    ?<img src={track.image} alt="" width={'60px'} height={'70px'} />
                     :<Box>{track.image}</Box>
                 }
                 <Box sx={{width: "30%"}}>
@@ -70,7 +70,7 @@ const TracksTable: FC<TracksTableProps> = ({ selectedPlaylistId, playlists }): R
                 <p className="ellipsis-text">{track.albumName}</p>
                 </Box>
                 <Box sx={{width: "20%"}}>{track.releaseDate}</Box>
-                <Button onClick={()=>handleDeleteTrack(track.uri)} sx={{textWrap: "nowrap", width: "200px"}} variant="contained">Remove track</Button>
+                <Button onClick={()=>handleDeleteTrack(track.uri)} sx={{textWrap: "nowrap", width: "200px", backgroundColor: "white", color: "black"}} variant="contained">Remove</Button>
             </Box>
         ))}
       </Box>

@@ -25,7 +25,7 @@ const App: FC = (): ReactElement => {
   const memoizedSelectPlaylist = useMemo(() => <SelectPlaylist playlists={playlists} />, [playlists]);
   
   return (
-    <Box sx={{ p: "5%", height: "100%", display: "flex", gap: "40px", flexDirection: "column" }}>
+    <Box className="background" sx={{ p: "5%", minHeight: "100vh", display: "flex", gap: "40px", flexDirection: "column" }}>
       <Box sx={{display: "flex", flexDirection: "row", justifyContent: "space-between", width: "100%", pb: "5%"}}>
         {memoizedSearchtrack}
         {memoizedAddNewPlaylist}

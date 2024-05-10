@@ -40,8 +40,9 @@ const SelectPlaylist: FC<PlaylistsList> = ({ playlists }) => {
     <Box sx={{display: 'flex', flexDirection: 'column', gap: '30px'}}>
       <Box sx={{ display: "flex", alignItems: "center", gap: "5%" }}>
         <FormControl sx={{ width: "30%" }}>
-          <InputLabel id="demo-simple-select-label">Select playlist</InputLabel>
+          <InputLabel sx={{color: "white"}} id="demo-simple-select-label">Select playlist</InputLabel>
           <Select
+            sx={{ backgroundColor: "white", color: "black"}}
             value={selectedPlaylist}
             label="Select playlist"
             onChange={handleChange}
