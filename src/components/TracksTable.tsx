@@ -16,7 +16,25 @@ const TracksTable: FC<TracksTableProps> = ({ selectedPlaylistId, playlists }): R
             releaseDate: <Skeleton width={60} variant="text" sx={{ fontSize: '1rem' }} />,
             id: "",
             uri: ""
-    }]);
+    },
+    {
+      image: <Skeleton variant="rectangular" width={40} height={50} />,
+      trackName: <Skeleton  width={60} variant="text" sx={{ fontSize: '1rem' }} />,
+      artistName: <Skeleton width={60} variant="text" sx={{ fontSize: '1rem' }} />,
+      albumName: <Skeleton width={60} variant="text" sx={{ fontSize: '1rem' }} />,
+      releaseDate: <Skeleton width={60} variant="text" sx={{ fontSize: '1rem' }} />,
+      id: "",
+      uri: ""
+},
+{
+  image: <Skeleton variant="rectangular" width={40} height={50} />,
+  trackName: <Skeleton  width={60} variant="text" sx={{ fontSize: '1rem' }} />,
+  artistName: <Skeleton width={60} variant="text" sx={{ fontSize: '1rem' }} />,
+  albumName: <Skeleton width={60} variant="text" sx={{ fontSize: '1rem' }} />,
+  releaseDate: <Skeleton width={60} variant="text" sx={{ fontSize: '1rem' }} />,
+  id: "",
+  uri: ""
+}]);
     const handleDeleteTrack = async (uri) =>{
       const removing = await removeTrackFromPlaylist(selectedPlaylistId, uri)
       if(removing){
@@ -57,7 +75,7 @@ const TracksTable: FC<TracksTableProps> = ({ selectedPlaylistId, playlists }): R
     return (
       <Box sx={{display: "flex", flexDirection: "column", gap: "15px"}}>
         {selectedPlaylistTracks && selectedPlaylistTracks.map((track)=>(
-            <Box className="playlistTrack" key={track.id} sx={{width: "85%" ,display: "flex", flexDirection: "row", gap: "10%", alignItems: "center"}}>
+            <Box className="playlistTrack" key={track.id} sx={{width: "90%" ,display: "flex", flexDirection: "row", gap: "5%", alignItems: "center"}}>
                 {typeof track.image === 'string'
                     ?<img src={track.image} alt="" width={'60px'} height={'70px'} />
                     :<Box>{track.image}</Box>

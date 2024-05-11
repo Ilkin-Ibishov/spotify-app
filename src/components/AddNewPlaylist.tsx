@@ -28,7 +28,7 @@ const AddNewPlaylist: FC<any> = ({fetchDataAndSetPlaylists}): ReactElement => {
   }
     return (
         <>
-            <Button onClick={handleClickOpen} sx={{textWrap: "nowrap",  backgroundColor: "white", color: "black"}} variant="contained">Add new playlist</Button>
+            <Button onClick={handleClickOpen} sx={{textWrap: "nowrap",  backgroundColor: "white", color: "black", height:"3em"}} variant="contained">Add new playlist</Button>
             <Dialog
                 fullWidth
                 open={open}

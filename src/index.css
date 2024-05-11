@@ -31,3 +31,8 @@ code {
   padding: 10px;
   border-radius: 5px;
 }
+
+.buttonTexts{
+  padding: 0;
+  margin: 0;
+}
